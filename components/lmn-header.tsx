@@ -1,4 +1,4 @@
-import { MapPin } from 'lucide-react'
+import { Home, Map as MapIcon, MapPin, UserRound } from 'lucide-react'
 
 export function LmnHeader() {
   return (
@@ -12,7 +12,21 @@ export function LmnHeader() {
           <small>University of Washington · Seattle</small>
         </span>
       </a>
-      <span className="prototype-badge">Prototype · sample data</span>
+      <nav className="prototype-nav" aria-label="Primary navigation">
+        <a className="nav-pill active" href="/" aria-current="page">
+          <Home aria-hidden="true" />
+          Home
+        </a>
+        <button className="nav-pill" type="button" disabled>
+          <MapIcon aria-hidden="true" />
+          Routes <span className="nav-coming-soon">Coming soon</span>
+        </button>
+        <button className="nav-pill" type="button" disabled>
+          <UserRound aria-hidden="true" />
+          Profile <span className="nav-coming-soon">Coming soon</span>
+        </button>
+      </nav>
+      <span className="prototype-badge">Sample map</span>
     </header>
   )
 }

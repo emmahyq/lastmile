@@ -1,4 +1,4 @@
-import { Crosshair } from 'lucide-react'
+import { ChevronDown, Crosshair, Navigation } from 'lucide-react'
 
 type NavigationSummaryProps = {
   onLocate: () => void
@@ -17,9 +17,16 @@ export function NavigationSummary({ onLocate }: NavigationSummaryProps) {
           <Crosshair aria-hidden="true" />
         </button>
       </div>
+      <button className="route-preview" type="button" disabled>
+        <span className="route-icon"><Navigation aria-hidden="true" /></span>
+        <span>
+          <strong>Plan an accessible route</strong>
+          <small>Coming soon</small>
+        </span>
+        <ChevronDown aria-hidden="true" />
+      </button>
       <p className="prototype-note">
-        Route planning is not available yet. Map details are illustrative and have not been verified
-        for current conditions.
+        Map details are illustrative and have not been verified for current conditions.
       </p>
     </section>
   )

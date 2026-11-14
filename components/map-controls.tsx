@@ -1,4 +1,5 @@
-import { Crosshair, Filter } from 'lucide-react'
+import { Accessibility, Crosshair, Filter } from 'lucide-react'
+import type { RefObject } from 'react'
 import type { MapAction } from '@/lib/map-types'
 
 type MapControlsProps = {
@@ -7,6 +8,7 @@ type MapControlsProps = {
   onMapAction: (action: MapAction['type']) => void
   filtersExpanded: boolean
   filtersPanelId: string
+  filterToggleRef: RefObject<HTMLButtonElement | null>
 }
 
 export function MapControls({
@@ -15,11 +17,13 @@ export function MapControls({
   onMapAction,
   filtersExpanded,
   filtersPanelId,
+  filterToggleRef,
 }: MapControlsProps) {
   return (
     <>
       <div className="prototype-map-controls">
         <button
+          ref={filterToggleRef}
           className="filter-pill"
           type="button"
           onClick={onFilterToggle}
@@ -29,9 +33,18 @@ export function MapControls({
           <Filter aria-hidden="true" />
           Filter{activeFilterCount > 0 ? ` · ${activeFilterCount}` : ''}
         </button>
+        <button
+          className="accessibility-button"
+          type="button"
+          aria-label="Accessible routes (coming soon)"
+          title="Accessible route guidance is coming soon."
+          disabled
+        >
+          <Accessibility aria-hidden="true" />
+        </button>
       </div>
 
-      <div className="prototype-zoom-controls" aria-label="Map zoom controls">
+      <div className="prototype-zoom-controls" role="group" aria-label="Map controls">
         <button type="button" onClick={() => onMapAction('zoom-in')} aria-label="Zoom in">
           +
         </button>

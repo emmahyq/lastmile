@@ -1,4 +1,5 @@
 import { X } from 'lucide-react'
+import type { RefObject } from 'react'
 import type { MapLayerId } from '@/lib/map-types'
 
 type FilterOption = {
@@ -9,6 +10,7 @@ type FilterOption = {
 
 type MapFilterPanelProps = {
   id: string
+  closeButtonRef: RefObject<HTMLButtonElement | null>
   activeLayers: MapLayerId[]
   hidden: boolean
   onLayerToggle: (layer: MapLayerId) => void
@@ -23,6 +25,7 @@ const filterOptions: FilterOption[] = [
 
 export function MapFilterPanel({
   id,
+  closeButtonRef,
   activeLayers,
   hidden,
   onLayerToggle,
@@ -43,7 +46,13 @@ export function MapFilterPanel({
           <p className="section-label">MAP FILTERS</p>
           <h2 id={`${id}-title`}>Map filters</h2>
         </div>
-        <button className="close-filter" type="button" onClick={onClose} aria-label="Close filters">
+        <button
+          ref={closeButtonRef}
+          className="close-filter"
+          type="button"
+          onClick={onClose}
+          aria-label="Close filters"
+        >
           <X aria-hidden="true" />
         </button>
       </div>
