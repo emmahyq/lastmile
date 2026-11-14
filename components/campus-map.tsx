@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type L from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import type { MapAction, MapLayerId } from '@/lib/map-types'
@@ -121,6 +121,7 @@ function createMapOverlays(leaflet: typeof import('leaflet')): MapOverlays {
 
 export function CampusMap({ activeLayers, action, onLocationError }: CampusMapProps) {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [mapReady, setMapReady] = useState(false)
   const mapRef = useRef<L.Map | null>(null)
   const leafletRef = useRef<typeof import('leaflet') | null>(null)
   const overlaysRef = useRef<MapOverlays | null>(null)
@@ -152,6 +153,7 @@ export function CampusMap({ activeLayers, action, onLocationError }: CampusMapPr
       leafletRef.current = leaflet
       mapRef.current = map
       overlaysRef.current = createMapOverlays(leaflet)
+      setMapReady(true)
     }
 
     void initializeMap()
@@ -176,9 +178,7 @@ export function CampusMap({ activeLayers, action, onLocationError }: CampusMapPr
     const map = mapRef.current
     const overlays = overlaysRef.current
 
-    if (!map || !overlays) return
-
-    map.setView(CAMPUS_CENTER, map.getZoom())
+    if (!mapReady || !map || !overlays) return
 
     Object.entries(overlays).forEach(([layerId, layer]) => {
       if (activeLayers.includes(layerId as MapLayerId)) {
@@ -187,12 +187,12 @@ export function CampusMap({ activeLayers, action, onLocationError }: CampusMapPr
         map.removeLayer(layer)
       }
     })
-  }, [activeLayers])
+  }, [activeLayers, mapReady])
 
   useEffect(() => {
     const map = mapRef.current
 
-    if (!map || !action) return
+    if (!mapReady || !map || !action) return
 
     if (action.type === 'zoom-in') {
       map.zoomIn()
@@ -253,14 +253,15 @@ export function CampusMap({ activeLayers, action, onLocationError }: CampusMapPr
       },
       { enableHighAccuracy: true, maximumAge: 5000, timeout: 15000 },
     )
-  }, [action, onLocationError])
+  }, [action, mapReady, onLocationError])
 
   return (
     <div
       ref={containerRef}
       className="campus-map"
       aria-label="Interactive map of the University of Washington Seattle campus"
-      role="application"
+      role="region"
+      aria-roledescription="map"
     />
   )
 }

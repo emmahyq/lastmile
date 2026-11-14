@@ -1,22 +1,20 @@
-import { Accessibility, Crosshair, Filter } from 'lucide-react'
+import { Crosshair, Filter } from 'lucide-react'
 import type { MapAction } from '@/lib/map-types'
 
 type MapControlsProps = {
   activeFilterCount: number
-  accessibleRoutesEnabled: boolean
   onFilterToggle: () => void
-  onAccessibleRoutesToggle: () => void
   onMapAction: (action: MapAction['type']) => void
   filtersExpanded: boolean
+  filtersPanelId: string
 }
 
 export function MapControls({
   activeFilterCount,
-  accessibleRoutesEnabled,
   onFilterToggle,
-  onAccessibleRoutesToggle,
   onMapAction,
   filtersExpanded,
+  filtersPanelId,
 }: MapControlsProps) {
   return (
     <>
@@ -26,18 +24,10 @@ export function MapControls({
           type="button"
           onClick={onFilterToggle}
           aria-expanded={filtersExpanded}
+          aria-controls={filtersPanelId}
         >
           <Filter aria-hidden="true" />
           Filter{activeFilterCount > 0 ? ` · ${activeFilterCount}` : ''}
-        </button>
-        <button
-          className={accessibleRoutesEnabled ? 'accessibility-button selected' : 'accessibility-button'}
-          type="button"
-          onClick={onAccessibleRoutesToggle}
-          aria-pressed={accessibleRoutesEnabled}
-          aria-label="Toggle accessible routes"
-        >
-          <Accessibility aria-hidden="true" />
         </button>
       </div>
 

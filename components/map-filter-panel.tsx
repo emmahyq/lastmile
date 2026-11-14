@@ -8,7 +8,9 @@ type FilterOption = {
 }
 
 type MapFilterPanelProps = {
+  id: string
   activeLayers: MapLayerId[]
+  hidden: boolean
   onLayerToggle: (layer: MapLayerId) => void
   onClose: () => void
 }
@@ -19,13 +21,27 @@ const filterOptions: FilterOption[] = [
   { id: 'parking', label: 'Parking areas', tone: 'blue' },
 ]
 
-export function MapFilterPanel({ activeLayers, onLayerToggle, onClose }: MapFilterPanelProps) {
+export function MapFilterPanel({
+  id,
+  activeLayers,
+  hidden,
+  onLayerToggle,
+  onClose,
+}: MapFilterPanelProps) {
   return (
-    <section className="prototype-filter-panel" aria-label="Map filters">
+    <section
+      id={id}
+      className="prototype-filter-panel"
+      aria-labelledby={`${id}-title`}
+      hidden={hidden}
+      onKeyDown={(event) => {
+        if (event.key === 'Escape') onClose()
+      }}
+    >
       <div className="filter-panel-heading">
         <div>
           <p className="section-label">MAP FILTERS</p>
-          <h2>Show on map</h2>
+          <h2 id={`${id}-title`}>Map filters</h2>
         </div>
         <button className="close-filter" type="button" onClick={onClose} aria-label="Close filters">
           <X aria-hidden="true" />
