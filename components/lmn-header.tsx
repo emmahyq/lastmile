@@ -8,7 +8,7 @@ type NavigationItem = {
   icon: LucideIcon
 }
 
-type WayfinderHeaderProps = {
+type LmnHeaderProps = {
   activeTab: NavigationTab
   onTabChange: (tab: NavigationTab) => void
 }
@@ -19,7 +19,7 @@ const navigationItems: NavigationItem[] = [
   { label: 'Profile', icon: UserRound },
 ]
 
-export function WayfinderHeader({ activeTab, onTabChange }: WayfinderHeaderProps) {
+export function LmnHeader({ activeTab, onTabChange }: LmnHeaderProps) {
   return (
     <header className="prototype-header">
       <nav className="prototype-nav" aria-label="Primary navigation">

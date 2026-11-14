@@ -1,5 +1,5 @@
-import { WayfinderApp } from '@/components/wayfinder-app'
+import { LmnApp } from '@/components/lmn-app'
 
 export default function Page() {
-  return <WayfinderApp />
+  return <LmnApp />
 }

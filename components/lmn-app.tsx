@@ -6,10 +6,10 @@ import { CampusMap } from '@/components/campus-map'
 import { MapControls } from '@/components/map-controls'
 import { MapFilterPanel } from '@/components/map-filter-panel'
 import { NavigationSummary } from '@/components/navigation-summary'
-import { WayfinderHeader, type NavigationTab } from '@/components/wayfinder-header'
+import { LmnHeader, type NavigationTab } from '@/components/lmn-header'
 import type { MapAction, MapLayerId } from '@/lib/map-types'
 
-export function WayfinderApp() {
+export function LmnApp() {
   const [activeTab, setActiveTab] = useState<NavigationTab>('Home')
   const [activeLayers, setActiveLayers] = useState<MapLayerId[]>([])
   const [filtersVisible, setFiltersVisible] = useState(false)
@@ -31,7 +31,7 @@ export function WayfinderApp() {
 
   return (
     <main className="prototype-shell">
-      <WayfinderHeader activeTab={activeTab} onTabChange={setActiveTab} />
+      <LmnHeader activeTab={activeTab} onTabChange={setActiveTab} />
 
       <aside className="prototype-sidebar">
         <section className="prototype-intro">
